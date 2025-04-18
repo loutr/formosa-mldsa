@@ -24,7 +24,7 @@ namespace coefficient {
     }
 
     inline
-    fn make_hint(reg u32 a0, reg u32 a1, reg u64 msf) -> reg u32, #msf reg u64 {
+    fn make_hint(reg u32 a0, reg u32 a1) -> reg u32 {
         reg u32 one = 1;
         reg u32 zero = 0;
         reg u32 result = 0;
@@ -34,7 +34,7 @@ namespace coefficient {
         result = one if (a0 >s GAMMA2);
         result = one if (a0 <s -GAMMA2);
 
-        return result, msf;
+        return result;
     }
 
     inline

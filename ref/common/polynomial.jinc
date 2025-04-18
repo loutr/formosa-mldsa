@@ -157,7 +157,7 @@ namespace polynomial {
             a1 = f1[i];
             a1 = #protect_32(a1, msf);
 
-            hint, msf = coefficient::make_hint(a0, a1, msf);
+            hint = coefficient::make_hint(a0, a1);
 
             hints[i] = hint;
             weight += hint;
