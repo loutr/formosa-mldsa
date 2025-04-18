@@ -120,7 +120,7 @@ fn sign_internal(
         w = column_vector::invert_ntt_montgomery(w);
 
         w = column_vector::conditionally_add_modulus(w);
-        #declassify w0, w1 = column_vector::decompose(w);
+        w0, w1 = column_vector::decompose(w);
 
         commitment_encoded = commitment::encode(w1);
 
@@ -160,12 +160,13 @@ fn sign_internal(
 
                 _ = #init_msf();
                 if(infinity_norm_check_result == 0) {
-                    #declassify w0_minus_cs2_plus_ct0 = column_vector::add(w0_minus_cs2, ct0);
+                    w0_minus_cs2_plus_ct0 = column_vector::add(w0_minus_cs2, ct0);
 
                     ones_in_hint, hint = column_vector::make_hint(w0_minus_cs2_plus_ct0, w1);
 
                     _ = #init_msf();
-                    if(ones_in_hint <= MAX_ONES_IN_HINT) {
+                    #declassify inline bool condition = ones_in_hint <= MAX_ONES_IN_HINT;
+                    if(condition) {
                         exit_rejection_sampling_loop = 1;
                     }
                 }

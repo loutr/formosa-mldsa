@@ -25,42 +25,14 @@ namespace coefficient {
 
     inline
     fn make_hint(reg u32 a0, reg u32 a1, reg u64 msf) -> reg u32, #msf reg u64 {
-        reg u32 result;
-        inline bool condition;
+        reg u32 one = 1;
+        reg u32 zero = 0;
+        reg u32 result = 0;
 
-        result = 0;
-
-        #declassify condition = a0 >s GAMMA2;
-        if (condition) {
-            msf = #update_msf(condition, msf);
-
-            result = 1;
-        } else {
-            msf = #update_msf(!condition, msf);
-
-            #declassify condition = a0 <s -GAMMA2;
-            if (condition) {
-                msf = #update_msf(condition, msf);
-                result = 1;
-            } else {
-                msf = #update_msf(!condition, msf);
-
-                #declassify condition = a0 == -GAMMA2;
-                if (condition) {
-                    msf = #update_msf(condition, msf);
-
-                    #declassify condition = a1 != 0;
-                    if (condition) {
-                        msf = #update_msf(condition, msf);
-                        result = 1;
-                    } else {
-                        msf = #update_msf(!condition, msf);
-                    }
-                } else {
-                    msf = #update_msf(!condition, msf);
-                }
-            }
-        }
+        result = one if (a0 == -GAMMA2);
+        result = zero if (a1 == 0);
+        result = one if (a0 >s GAMMA2);
+        result = one if (a0 <s -GAMMA2);
 
         return result, msf;
     }
